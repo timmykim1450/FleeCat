@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FleeCat – 플리마켓에서, 당신만의 발견을 캐치하다</title>
+  <style>
+    :root{
+      --pink:#E84A77;        /* 버튼/포인트 */
+      --pink-bg:#FFF1F6;     /* 배경 */
+      --text:#333;
+      --muted:#6b6b6b;
+      --radius:16px;
+      --shadow:0 10px 30px rgba(232,74,119,0.15);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Pretendard","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--pink-bg);
+      color:var(--text);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .wrap{
+      width:min(1100px,92vw);
+      text-align:center;
+      padding:48px 28px 36px;
+      background:#fff;
+      border-radius:28px;
+      box-shadow:var(--shadow);
+    }
+    .brand{
+      display:flex; align-items:center; justify-content:center; gap:22px;
+      margin-bottom:18px;
+    }
+    .logo{
+      width:min(140px,22vw); height:auto; border-radius:20px;
+      box-shadow:0 6px 18px rgba(0,0,0,.05);
+    }
+    .title{
+      font-size: clamp(28px, 4.6vw, 44px);
+      margin:0; color:var(--black); line-height:1.15; font-weight:800;
+    }
+    .desc{
+      max-width:840px; margin:18px auto 40px; 
+      font-size:clamp(16px, 2.2vw, 18px); color:var(--muted);
+      line-height:1.75;
+    }
+    .cta{
+      display:flex; gap:18px; justify-content:center; flex-wrap:wrap;
+      margin: 8px 0 10px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width: min(360px, 84vw);
+      padding:20px 28px; border-radius:var(--radius);
+      font-weight:800; font-size:clamp(18px, 2.8vw, 22px);
+      text-decoration:none; transition:.2s transform ease, .2s filter ease;
+      box-shadow:var(--shadow);
+    }
+    .btn:hover{ transform: translateY(-2px); filter:brightness(0.98); }
+    .btn:active{ transform: translateY(0); filter:brightness(0.96); }
+    .btn-buyer{ background:var(--white); color:var(--black); border:2px solid var(--pink); }
+    .btn-seller{ background:#fff; color:var(--black); border:2px solid var(--pink); }
+    .sub{
+      margin-top:26px; font-size:14px; color:var(--muted);
+    }
+    footer{ margin-top:26px; font-size:13px; color:#9a9a9a; }
+    @media (max-width:560px){
+      .wrap{ padding:36px 18px 26px; border-radius:22px; }
+      .brand{ flex-direction:column; gap:14px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="brand">
+      <!-- 로고 파일명 교체 가능 -->
+      <img src="logo_v4.png" alt="FleeCat 로고" class="logo">
+      <h1 class="title">플리마켓에서 <br> 당신만의 발견을 Catch하다</h1>
+    </div>
+
+    <p class="desc">
+      FleeCat은 플리마켓 셀러와 소비자를 온라인으로 연결하는 새로운 플랫폼입니다.<br>
+      더 나은 서비스를 위해 간단한 설문에 참여해 주세요.
+    </p>
+
+    <div class="cta">
+      <!-- 아래 링크를 각 폼 주소로 바꾸세요 -->
+      <a class="btn btn-buyer" href="https://form.naver.com/edit/wolzCfIRoUTf0NXbDrSbMQ" target="_blank" rel="noopener">
+        🙋‍♀️ 구매자 설문 참여하기
+      </a>
+      <a class="btn btn-seller" href="https://form.naver.com/edit/I0R9SHP2VEw6yERxz91OaQ" target="_blank" rel="noopener">
+        🧵 판매자(셀러) 설문 참여하기
+      </a>
+    </div>
+
+    <footer>© 2025 FleeCat. All rights reserved.</footer>
+  </main>
+</body>
+</html>
