@@ -1,7 +1,7 @@
 // src/pages/Cart.jsx
 import { useEffect, useMemo, useState } from 'react'
-import { getCart, removeFromCart, clearCart } from '../utils/cart'
-import { toastOk, toastErr } from '../lib/toast'
+import { getCart, removeFromCart, clearCart } from '../../utils/cart'
+import { toastOk, toastErr } from '../../lib/toast'
 
 export default function Cart() {
   const [cart, setCart] = useState([])
