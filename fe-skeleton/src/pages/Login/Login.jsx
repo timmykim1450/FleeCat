@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
-import { supabase } from '../lib/supabaseClient'
-import { toastOk, toastErr } from '../lib/toast'
+import { supabase } from '../../lib/supabaseClient'
+import { toastOk, toastErr } from '../../lib/toast'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -53,7 +53,7 @@ export default function Login() {
   return (
     <>
       <h1>로그인</h1>
-      <form onSubmit={onSubmit} style={{ display: 'grid', gap: 8, maxWidth: 360 }}>
+      <form onSubmit={onSubmit}>
         <input
           type="email"
           autoComplete="email"

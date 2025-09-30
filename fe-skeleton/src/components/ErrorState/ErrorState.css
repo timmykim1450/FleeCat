@@ -1,0 +1,44 @@
+/* Error State Component */
+.error-state {
+  padding: 24px;
+  text-align: center;
+}
+
+.error-state__message {
+  color: crimson;
+  margin: 0 0 16px;
+  font-size: 16px;
+}
+
+.error-state__button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.error-state__button:hover {
+  background-color: #f5f5f5;
+}
+
+.error-state--compact {
+  padding: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .error-state {
+    padding: 16px;
+  }
+
+  .error-state__message {
+    font-size: 14px;
+  }
+
+  .error-state__button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}

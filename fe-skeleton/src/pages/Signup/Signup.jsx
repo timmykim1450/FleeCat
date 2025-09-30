@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { supabase } from '../lib/supabaseClient'
-import { toastOk, toastErr, toastLoading } from '../lib/toast'
+import { supabase } from '../../lib/supabaseClient'
+import { toastOk, toastErr, toastLoading } from '../../lib/toast'
 
 export default function Signup() {
   const [email, setEmail] = useState('')

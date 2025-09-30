@@ -1,0 +1,58 @@
+/* Global Layout System */
+:root {
+  --container-max-width: 1650px;
+  --container-padding: 0 16px;
+}
+
+/* Universal wrap container for consistent 1650px layout */
+.wrap {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--container-padding);
+}
+
+/* Main layout structure */
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout__main {
+  flex: 1;
+  padding: 24px 0;
+}
+
+.layout__footer {
+  padding: 16px 0;
+  border-top: 1px solid #ddd;
+  text-align: center;
+  background-color: #f8f8f8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1680px) {
+  .wrap {
+    padding: var(--container-padding) 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrap {
+    padding: var(--container-padding) 16px;
+  }
+
+  .layout__main {
+    padding: 16px 0;
+  }
+
+  .layout__footer {
+    padding: 12px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrap {
+    padding: var(--container-padding) 12px;
+  }
+}
