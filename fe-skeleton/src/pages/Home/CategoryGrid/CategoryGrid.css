@@ -1,0 +1,98 @@
+.category-section {
+  background-color: white;
+  padding: 24px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.category-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.category-scroll-wrapper {
+  overflow-x: auto;
+  padding-bottom: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+.category-grid {
+  display: flex;
+  gap: 24px;
+  min-width: max-content;
+  justify-content: center;
+}
+
+.category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  min-width: 80px;
+}
+
+.category-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #f9fafb;
+  margin-bottom: 8px;
+  transition: background-color 0.2s;
+}
+
+.category-item:hover .category-icon-wrapper {
+  background-color: #f3f4f6;
+}
+
+.category-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Color variants */
+.category-icon-wrapper.pink .category-icon {
+  color: #666;
+}
+
+.category-icon-wrapper.red .category-icon {
+  color: #666;
+}
+
+.category-icon-wrapper.blue .category-icon {
+  color: #666;
+}
+
+.category-icon-wrapper.purple .category-icon {
+  color: #666;
+}
+
+.category-icon-wrapper.green .category-icon {
+  color: #666;
+}
+
+.category-icon-wrapper.orange .category-icon {
+  color: #666;
+}
+
+.category-icon-wrapper.indigo .category-icon {
+  color: #666;
+}
+
+.category-icon-wrapper.yellow .category-icon {
+  color: #666;
+}
+
+.category-icon-wrapper.amber .category-icon {
+  color: #666;
+}
+
+.category-name {
+  font-size: 12px;
+  color: #374151;
+  text-align: center;
+  line-height: 1.25;
+}

@@ -6,7 +6,7 @@
 
 /* Universal wrap container for consistent 1650px layout */
 .wrap {
-  max-width: var(--container-max-width);
+  width: 1200px;
   margin: 0 auto;
   padding: var(--container-padding);
 }
