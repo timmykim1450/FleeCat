@@ -181,7 +181,7 @@ function RelatedProducts({ currentId }) {
     ;(async () => {
       try {
         const all = await api.get('/api/products') // 실패시 api가 토스트 처리
-        const others = (all || []).filter(p => p.id !== currentId).slice(0, 4)
+        const others = (all || []).filter(p => p.product_id !== currentId).slice(0, 4)
         if (alive) setItems(others)
       } catch {
         /* 목록은 조용히 실패해도 됨 */
@@ -197,17 +197,17 @@ function RelatedProducts({ currentId }) {
       <h2>다른 상품도 둘러보세요</h2>
       <div>
         {items.map(p => (
-          <Link key={p.id} to={`/products/${p.id}`}>
+          <Link key={p.product_id} to={`/products/${p.product_id}`}>
             <img
-              src={p.image_url}
-              alt={p.name}
+              src={p.product_img?.[0]?.product_img_url || '/placeholder.jpg'}
+              alt={p.product_name}
             />
             <div>
               <div>
-                {p.name}
+                {p.product_name}
               </div>
               <div>
-                {Number(p.price).toLocaleString()}원
+                {Number(p.product_price).toLocaleString()}원
               </div>
             </div>
           </Link>

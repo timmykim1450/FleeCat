@@ -27,14 +27,14 @@
 
 .body-header__logo-link {
   text-decoration: none;
-  font-size: 24px;
+  font-size: 40px;
   font-weight: bold;
-  color: #333;
+  color: #FF1493;
   transition: color 0.25s ease;
 }
 
 .body-header__logo-link:hover {
-  color: #646cff;
+  color: #FF1493;
 }
 
 /* Categories Section */
