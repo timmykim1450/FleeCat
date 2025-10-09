@@ -1,5 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import "./MainBanner.css";
 import OfflineMarket from "../../../assets/Offline-Market.png";
 import OfflineOneday from "../../../assets/Offline-Oneday.png";
@@ -10,45 +16,60 @@ const banners = [
     image: OfflineMarket,
     title: "",
     subtitle: "",
-    link: "#"
+    link: "/visual"
   },
   {
     id: 2,
     image: OfflineOneday,
     title: "",
     subtitle: "",
-    link: "#"
+    link: "/oneday"
   }
 ];
 
 export function MainBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  const nextSlide = (e) => {
-    e?.stopPropagation();
-    setCurrentSlide((prev) => (prev + 1) % banners.length);
-  };
-
-  const prevSlide = (e) => {
-    e?.stopPropagation();
-    setCurrentSlide((prev) => (prev - 1 + banners.length) % banners.length);
-  };
+  const swiperRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleBannerClick = (banner) => {
-    // 여기서 실제 링크로 이동하거나 다른 동작을 수행할 수 있습니다
-    window.open(banner.link, '_blank');
+    if (banner.link.startsWith('/')) {
+      navigate(banner.link);
+    } else {
+      window.open(banner.link, '_blank');
+    }
   };
 
   return (
     <section className="banner-section">
+      <button
+        className="banner-nav-btn banner-nav-prev"
+        onClick={() => swiperRef.current?.slidePrev()}
+      >
+        <ChevronLeft className="banner-nav-icon" />
+      </button>
+
       <div className="banner-container">
-        <div className="banner-wrapper">
-          {/* Banner slides */}
-          <div className="banner-slides">
-            {banners.map((banner, index) => (
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          slidesPerView={1}
+          centeredSlides={true}
+          spaceBetween={16}
+          loop={true}
+          speed={500}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: false,
+          }}
+          onSwiper={(swiper) => { swiperRef.current = swiper; }}
+          onSlideChange={(swiper) => setCurrentSlide(swiper.realIndex)}
+          className="banner-swiper"
+        >
+          {banners.map((banner) => (
+            <SwiperSlide key={banner.id} className="banner-slide">
               <div
-                key={banner.id}
-                className={`banner-slide ${index === currentSlide ? 'active' : ''}`}
+                className="banner-slide-content"
                 onClick={() => handleBannerClick(banner)}
               >
                 <img
@@ -62,29 +83,22 @@ export function MainBanner() {
                   <p className="banner-subtitle">{banner.subtitle}</p>
                 </div>
               </div>
-            ))}
-          </div>
+            </SwiperSlide>
+          ))}
 
           {/* Page indicator */}
           <div className="banner-page-indicator">
             {String(currentSlide + 1).padStart(2, '0')}/{String(banners.length).padStart(2, '0')}
           </div>
-
-          {/* Navigation arrows */}
-          <button
-            className="banner-nav-btn banner-nav-prev"
-            onClick={(e) => prevSlide(e)}
-          >
-            <ChevronLeft className="banner-nav-icon" />
-          </button>
-          <button
-            className="banner-nav-btn banner-nav-next"
-            onClick={(e) => nextSlide(e)}
-          >
-            <ChevronRight className="banner-nav-icon" />
-          </button>
-        </div>
+        </Swiper>
       </div>
+
+      <button
+        className="banner-nav-btn banner-nav-next"
+        onClick={() => swiperRef.current?.slideNext()}
+      >
+        <ChevronRight className="banner-nav-icon" />
+      </button>
     </section>
   );
 }

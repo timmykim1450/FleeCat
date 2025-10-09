@@ -8,6 +8,11 @@ import Cart from './pages/Cart'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import NotFound from './pages/NotFound'
+import Account from './pages/Account'
+import Visual from './pages/Visual'
+import Oneday from './pages/Oneday'
+import TestInfra from './pages/TestInfra'
+import TestStates from './pages/TestStates'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import { AuthProvider } from './contexts/AuthContext.jsx'
 
@@ -20,11 +25,15 @@ export default function App() {
             <Route path="products" element={<Products />} />
             <Route path="products/:id" element={<ProductDetail />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="visual" element={<Visual />} />
+            <Route path="oneday" element={<Oneday />} />
+            <Route path="test-infra" element={<TestInfra />} />
+            <Route path="test-states" element={<TestStates />} />
             <Route
               path="account"
               element={
                 <ProtectedRoute>
-                  <div style={{ padding: 24 }}>마이페이지 (로그인 필요)</div>
+                  <Account />
                 </ProtectedRoute>
               }
             />

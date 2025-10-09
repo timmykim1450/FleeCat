@@ -2,8 +2,6 @@ import { supabase } from '../lib/supabase.js'
 
 export const getProducts = async (req, res) => {
   try {
-    console.log('📦 GET /api/products 요청 받음')
-
     const { data, error } = await supabase
       .from('product')
       .select(`
@@ -21,7 +19,6 @@ export const getProducts = async (req, res) => {
       return res.status(500).json({ error: error.message })
     }
 
-    console.log('✅ 상품 조회 성공:', data?.length, '개')
     res.json(data)
   } catch (err) {
     console.error('❌ 서버 에러:', err)

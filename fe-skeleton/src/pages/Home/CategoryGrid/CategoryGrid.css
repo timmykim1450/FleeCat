@@ -29,18 +29,18 @@
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  min-width: 80px;
+  min-width: 100px;
 }
 
 .category-icon-wrapper {
-  width: 56px;
-  height: 56px;
+  width: 96px;
+  height: 96px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   background-color: #f9fafb;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   transition: background-color 0.2s;
 }
 
@@ -49,8 +49,14 @@
 }
 
 .category-icon {
-  width: 24px;
-  height: 24px;
+  width: 64px;
+  height: 64px;
+}
+
+.category-icon-image {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
 }
 
 /* Color variants */
@@ -91,7 +97,8 @@
 }
 
 .category-name {
-  font-size: 12px;
+  font-size: 15px;
+  font-weight: 500;
   color: #374151;
   text-align: center;
   line-height: 1.25;

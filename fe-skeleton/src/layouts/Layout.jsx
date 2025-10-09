@@ -7,16 +7,21 @@ import '../styles/Layout.css'
 export default function Layout() {
   return (
     <div className="layout">
+      {/* Skip Links */}
+      <a href="#main-content" className="skip-link">
+        본문으로 건너뛰기
+      </a>
+
       <Header />
       <BodyHeader />
 
-      <main className="layout__main">
+      <main id="main-content" className="layout__main" role="main">
         <div className="wrap">
           <Outlet />
         </div>
       </main>
 
-      <footer className="layout__footer">
+      <footer className="layout__footer" role="contentinfo">
         <div className="wrap">
           © FE Skeleton
         </div>

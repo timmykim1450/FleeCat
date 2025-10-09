@@ -48,7 +48,7 @@ export default function BodyHeader() {
   const [activeCategory, setActiveCategory] = useState(Object.keys(categories)[0])
 
   return (
-    <div className="body-header">
+    <nav className="body-header" role="navigation" aria-label="주요 메뉴">
       <div className="wrap">
         <div className="body-header__inner">
           {/* 왼쪽: 로고 및 카테고리 */}
@@ -116,11 +116,12 @@ export default function BodyHeader() {
           </div>
 
           {/* 중앙: 검색바 */}
-          <div className="body-header__search">
+          <div className="body-header__search" role="search">
             <input
               type="text"
               placeholder="상품을 검색해보세요"
               className="body-header__search-input"
+              aria-label="상품 검색"
             />
           </div>
 
@@ -141,6 +142,6 @@ export default function BodyHeader() {
           </div>
         </div>
       </div>
-    </div>
+    </nav>
   )
 }

@@ -1,6 +1,9 @@
 // src/lib/toast.js
 import toast from 'react-hot-toast'
 
+// default export 추가
+export default toast
+
 export const toastOk = (msg) =>
   toast.success(msg ?? '완료되었습니다 ✅')
 

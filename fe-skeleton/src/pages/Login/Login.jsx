@@ -80,38 +80,6 @@ export default function Login() {
       </Link>
 
       <div className="login-container">
-        {/* 이메일/비밀번호 로그인 */}
-        <form onSubmit={onSubmit} className="login-form">
-          <div className="input-wrapper">
-            <input
-              type="email"
-              autoComplete="email"
-              placeholder="이메일"
-              value={email}
-              onChange={(e)=>setEmail(e.target.value)}
-              className="login-input"
-            />
-          </div>
-          <div className="input-wrapper">
-            <input
-              ref={pwRef}
-              type="password"
-              autoComplete="current-password"
-              placeholder="비밀번호"
-              value={password}
-              onChange={(e)=>setPassword(e.target.value)}
-              className="login-input"
-            />
-          </div>
-          <button disabled={loading} className="login-button">
-            {loading ? '처리중...' : '로그인'}
-          </button>
-        </form>
-
-        <p className="login-footer">
-          아직 계정이 없나요? <Link to="/signup">회원가입</Link>
-        </p>
-
         {/* 소셜 로그인 아이콘 */}
         <div className="social-login-icons">
           <button
@@ -147,6 +115,51 @@ export default function Login() {
             N
           </button>
         </div>
+
+        {/* 구분선 */}
+        <div className="login-divider">
+          <span>또는</span>
+        </div>
+
+        {/* 이메일/비밀번호 로그인 */}
+        <form onSubmit={onSubmit} className="login-form">
+          <div className="input-wrapper">
+            <input
+              type="email"
+              autoComplete="email"
+              placeholder=" "
+              value={email}
+              onChange={(e)=>setEmail(e.target.value)}
+              className="login-input"
+              id="email-input"
+            />
+            <label htmlFor="email-input" className="floating-label">
+              ID
+            </label>
+          </div>
+          <div className="input-wrapper">
+            <input
+              ref={pwRef}
+              type="password"
+              autoComplete="current-password"
+              placeholder=" "
+              value={password}
+              onChange={(e)=>setPassword(e.target.value)}
+              className="login-input"
+              id="password-input"
+            />
+            <label htmlFor="password-input" className="floating-label">
+              Password
+            </label>
+          </div>
+          <button disabled={loading} className="login-button">
+            {loading ? '처리중...' : '로그인'}
+          </button>
+        </form>
+
+        <p className="login-footer">
+          아직 계정이 없나요? <Link to="/signup">회원가입</Link>
+        </p>
       </div>
     </div>
   )

@@ -1,0 +1,33 @@
+{
+  "timestamp": "2025-10-03T12:03:13.699Z",
+  "userRequirement": "상품 상세 페이지를 만들어줘. 이미지 슬라이더와 리뷰 섹션이 필요해.",
+  "pmTask": {
+    "requirement": "상품 상세 페이지를 만들고 이미지 슬라이더와 리뷰 섹션 추가",
+    "frontendTask": "상품 상세 페이지를 생성하고, 이미지 슬라이더 컴포넌트를 구현합니다. 슬라이더는 최소 3개의 이미지를 보여줄 수 있어야 하며, 사용자가 좌우로 슬라이드를 이동할 수 있는 UI를 제공합니다. 또한, 리뷰 섹션을 추가하여 각 리뷰를 카드 형태로 표시하고, 별점 및 작성자 이름을 포함시킵니다.",
+    "backendTask": "상품 상세 정보를 제공하는 API를 구현합니다. API는 상품 ID를 기준으로 데이터베이스에서 상품 정보, 이미지 리스트, 리뷰 정보를 반환해야 합니다. 리뷰 정보는 작성자, 내용, 별점 등을 포함해야 하며, 필요한 경우 페이징 처리합니다.",
+    "constraints": [
+      "모바일 및 데스크탑에서 모두 반응형으로 구현",
+      "이미지 슬라이더는 접근성을 고려하여 키보드 네비게이션 지원",
+      "최소한의 로딩 시간 보장을 위한 이미지 최적화 필요"
+    ],
+    "priority": "high"
+  },
+  "frontendResult": {
+    "summary": "최종 코드는 React를 사용하여 상품 상세 페이지와 이미지 슬라이더, 리뷰 섹션을 구현합니다. 코드의 안정성과 사용자 경험을 고려해 슬라이더에 자동 재생 기능과 사용자 프로필 이미지 추가를 포함합니다. 리뷰는 고유 ID를 부여하여 관리하며, 이미지 슬라이더는 최소 3개의 이미지를 요구합니다.",
+    "codeSketch": "import React, { useState, useEffect } from 'react';\n\nconst ImageSlider = ({ images }) => {\n  const [currentIndex, setCurrentIndex] = useState(0);\n\n  const nextSlide = () => {\n    setCurrentIndex((prev) => (prev + 1) % images.length);\n  };\n\n  const prevSlide = () => {\n    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);\n  };\n\n  // 슬라이더 자동 재생\n  useEffect(() => {\n    const interval = setInterval(nextSlide, 3000);\n    return () => clearInterval(interval);\n  }, []);\n\n  if (images.length < 3) {\n    console.error('이미지는 최소 3개가 필요합니다.');\n    return null;\n  }\n\n  return (\n    <div>\n      <button onClick={prevSlide}>◀</button>\n      <img src={images[currentIndex]} alt={`Slide ${currentIndex + 1}`} />\n      <button onClick={nextSlide}>▶</button>\n    </div>\n  );\n};\n\nconst ReviewCard = ({ review }) => (\n  <div>\n    <h4>{review.author} <img src={review.profileImg} alt={`${review.author} 프로필`} /></h4>\n    <p>{'★'.repeat(review.rating)}</p>\n    <p>{review.comment}</p>\n  </div>\n);\n\nconst ProductDetailPage = ({ product }) => {\n  return (\n    <div>\n      <h1>{product.name}</h1>\n      <ImageSlider images={product.images} />\n      <h2>리뷰</h2>\n      {product.reviews.map((review) => (\n        <ReviewCard key={review.id} review={review} />\n      ))}\n    </div>\n  );\n};\n\nconst product = {\n  name: '상품 이름',\n  images: ['img1.jpg', 'img2.jpg', 'img3.jpg', 'img4.jpg'],\n  reviews: [\n    { id: 1, author: '사용자1', rating: 5, comment: '좋아요!', profileImg: 'profile1.jpg' },\n    { id: 2, author: '사용자2', rating: 4, comment: '만족합니다.', profileImg: 'profile2.jpg' },\n  ],\n};\n\nconst App = () => <ProductDetailPage product={product} />;\n\nexport default App;",
+    "risks": [
+      "자동 재생 기능이 사용자에게 불편할 수 있음",
+      "이미지 로딩 지연으로 인해 사용자 경험 저하 가능성",
+      "리뷰에 대한 데이터 정확성 문제"
+    ]
+  },
+  "backendResult": {
+    "summary": "상품 상세 정보를 제공하는 API는 PostgreSQL과 SQLAlchemy를 사용하여 최적화된 쿼리 및 캐싱 전략을 적용합니다. 입력 검증 및 에러 처리를 통해 보안성을 높이며, 페이징 처리를 통해 성능을 개선합니다. RESTful 원칙을 준수하며 확장성을 고려한 구조로 설계되었습니다.",
+    "codeSketch": "const express = require('express'); const { Pool } = require('pg'); const { body, validationResult } = require('express-validator'); const cache = require('cachetools').TTLCache; const app = express(); const pool = new Pool(); const reviewCache = new cache({ maxsize: 100, ttl: 300 });\n\nconst getProductDetails = async (productId, page, limit) => { const productQuery = 'SELECT * FROM products WHERE id = $1'; const product = await pool.query(productQuery, [productId]); if (product.rowCount === 0) return null; const imagesQuery = 'SELECT * FROM images WHERE product_id = $1'; const images = await pool.query(imagesQuery, [productId]); const reviewsQuery = 'SELECT * FROM reviews WHERE product_id = $1 LIMIT $2 OFFSET $3'; const reviews = await pool.query(reviewsQuery, [productId, limit, (page - 1) * limit]); return { product: product.rows[0], images: images.rows, reviews: reviews.rows }; };\n\napp.get('/api/products/:id', [ body('id').isInt().withMessage('Invalid product ID') ], async (req, res) => { const errors = validationResult(req); if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() }); const productId = parseInt(req.params.id); const page = parseInt(req.query.page) || 1; const limit = parseInt(req.query.limit) || 10; const cachedData = reviewCache.get(productId);\nif (cachedData) return res.json(cachedData); const productDetails = await getProductDetails(productId, page, limit); if (!productDetails) return res.status(404).send('Product not found'); reviewCache.set(productId, productDetails); res.json(productDetails); });\n\napp.listen(3000, () => { console.log('Server is running on port 3000'); });",
+    "risks": [
+      "SQL Injection 공격에 대한 대비가 미흡할 수 있음",
+      "캐시 만료로 인한 데이터 불일치 문제 발생 가능성",
+      "동시 다발적인 요청 처리 시 성능 저하 우려"
+    ]
+  }
+}

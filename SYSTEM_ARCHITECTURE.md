@@ -42,6 +42,8 @@ be-skeleton/
 │   │   └── products.routes.js
 │   ├── middlewares/           # 공통 미들웨어
 │   │   └── error.js
+│   ├── lib/                   # 외부 서비스 클라이언트
+│   │   └── supabase.js
 │   └── data/                  # 임시 데이터
 │       └── products.js
 ├── package.json
@@ -84,8 +86,10 @@ be-skeleton/
 ```
 fe-skeleton/
 ├── src/
-│   ├── App.jsx                # 루트 컴포넌트
+│   ├── App.jsx                # 루트 컴포넌트 (라우팅 정의 포함)
 │   ├── main.jsx              # 앱 진입점
+│   ├── App.css               # 루트 컴포넌트 스타일
+│   ├── index.css             # 전역 기본 스타일
 │   ├── components/           # 재사용 컴포넌트
 │   │   ├── Header/
 │   │   │   ├── Header.jsx
@@ -95,12 +99,15 @@ fe-skeleton/
 │   │   │   ├── BodyHeader.jsx
 │   │   │   ├── BodyHeader.css
 │   │   │   └── index.js
+│   │   ├── ProductCard/
+│   │   │   ├── ProductCard.jsx
+│   │   │   ├── ProductCard.css
+│   │   │   └── index.js
 │   │   ├── LoadingState/
 │   │   │   └── LoadingState.css
 │   │   ├── ErrorState/
 │   │   │   └── ErrorState.css
-│   │   ├── ProtectedRoute.jsx
-│   │   └── EventBlock.jsx
+│   │   └── ProtectedRoute.jsx
 │   ├── contexts/             # React Context
 │   │   └── AuthContext.jsx
 │   ├── layouts/              # 레이아웃 컴포넌트
@@ -108,8 +115,11 @@ fe-skeleton/
 │   ├── pages/                # 페이지 컴포넌트 (권장 패턴 구조)
 │   │   ├── Home/
 │   │   │   ├── Home.jsx        # 실제 컴포넌트 코드
-│   │   │   ├── Home.css
-│   │   │   └── index.js        # export만 담당
+│   │   │   ├── Home.css        # 홈페이지 스타일
+│   │   │   ├── index.js        # export만 담당
+│   │   │   ├── MainBanner/     # 메인 배너 컴포넌트
+│   │   │   ├── CategoryGrid/   # 카테고리 그리드 컴포넌트
+│   │   │   └── ProductSection/ # 상품 섹션 컴포넌트
 │   │   ├── Products/
 │   │   │   ├── Products.jsx    # 실제 컴포넌트 코드
 │   │   │   ├── Products.css    # ProductGrid + ProductCard 스타일
@@ -130,17 +140,18 @@ fe-skeleton/
 │   │       ├── NotFound.jsx    # 실제 컴포넌트 코드
 │   │       └── index.js        # export만 담당
 │   ├── lib/                  # 유틸리티 라이브러리
-│   │   ├── supabaseClient.js
-│   │   ├── api.js
-│   │   └── toast.jsx
+│   │   ├── supabaseClient.js # Supabase 클라이언트 설정
+│   │   ├── api.js            # API 호출 헬퍼
+│   │   └── toast.jsx         # 토스트 알림 설정
 │   ├── styles/               # 전역 스타일
 │   │   ├── variables.css      # 디자인 시스템 변수
 │   │   ├── Layout.css         # 레이아웃 시스템
 │   │   └── Form.css          # 공통 폼 스타일
 │   ├── utils/                # 헬퍼 함수
-│   │   └── cart.js
-│   └── routes/               # 라우팅 설정
-│       └── index.jsx
+│   │   └── cart.js           # 장바구니 유틸리티
+│   ├── routes/               # 라우팅 설정 (사용 안함, App.jsx에서 직접 정의)
+│   │   └── index.jsx
+│   └── assets/               # 정적 자산
 ├── package.json
 ├── vite.config.js
 └── eslint.config.js
@@ -162,12 +173,14 @@ fe-skeleton/
 - **컴포넌트 기반 아키텍처**: 페이지, 레이아웃, 재사용 컴포넌트 분리
 - **권장 파일 구조**: 컴포넌트명.jsx + index.js 패턴으로 명확한 식별
 - **컴포넌트 응집도**: 각 컴포넌트와 관련 스타일을 동일 폴더에 위치
+- **중첩 컴포넌트**: Home 페이지처럼 복잡한 페이지는 하위 컴포넌트로 분리 (MainBanner, CategoryGrid, ProductSection)
 - **Context API 패턴**: 전역 인증 상태 관리
 - **Protected Routes**: 인증이 필요한 페이지 보호
 - **API 레이어**: 백엔드 API 호출을 위한 추상화 계층
 - **로컬 스토리지**: 장바구니 데이터 클라이언트 측 저장
 - **디자인 시스템**: 전역 CSS 변수와 공통 스타일 분리
 - **Export 패턴**: index.js를 통한 깔끔한 모듈 export 관리
+- **인라인 라우팅**: App.jsx에서 직접 라우트 정의 (별도 라우터 파일 사용 안함)
 
 ### 상태 관리
 - **전역 상태**: AuthContext (인증 정보)
@@ -246,14 +259,15 @@ Frontend (React) ←→ Backend API (Express) ←→ Supabase Database
 - 반응형 UI
 
 ### 향후 확장 계획
-- 실제 Supabase 데이터베이스 연동
-- JWT 토큰 기반 인증
+- 실제 Supabase 데이터베이스 연동 (현재는 목 데이터 사용)
+- JWT 토큰 기반 인증 강화
 - 결제 시스템 통합
 - 관리자 패널
 - 실시간 알림
 - 이미지 업로드 및 최적화
 - 검색 및 필터링 기능
 - 성능 최적화 (캐싱, 페이지네이션)
+- 테스트 프레임워크 도입 (현재 테스트 미구현)
 
 ## 결론
 
